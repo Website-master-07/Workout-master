@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Club4Fitness Coppell — My Gym Planner</title>
+  <title>IronPath — My Gym Planner</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -229,19 +229,19 @@
 
   <!-- SCREEN 1: Pick gym days -->
   <div id="ob-days">
-    <div class="ob-logo"><span class="c4">CLUB4</span>FITNESS</div>
-    <span class="ob-city">Coppell, TX</span>
+    <div class="ob-logo"><span class="c4">IRON</span>PATH</div>
+    <span class="ob-city">GYM PLANNER</span>
     <div class="ob-tagline">My Gym Planner</div>
     <div class="ob-divider"></div>
     <div class="ob-question">How many days per week<br>do you go to the gym?</div>
     <div class="day-buttons" id="dayButtons"></div>
-    <div class="ob-tip">We'll build a personalized training split using only the equipment at Club4Fitness Coppell.</div>
+    <div class="ob-tip">We'll build a personalized training split tailored to your goals and schedule.</div>
   </div>
 
   <!-- SCREEN 2: Pick goal type -->
   <div id="ob-goal" class="hidden">
-    <div class="ob-logo"><span class="c4">CLUB4</span>FITNESS</div>
-    <span class="ob-city">Coppell, TX</span>
+    <div class="ob-logo"><span class="c4">IRON</span>PATH</div>
+    <span class="ob-city">GYM PLANNER</span>
     <div class="ob-divider"></div>
     <div class="ob-question">What's your main goal?</div>
     <div class="goal-cards">
@@ -278,8 +278,8 @@
 
   <header id="app-header">
     <div class="brand">
-      <div class="brand-main"><span class="c4">CLUB4</span>FITNESS</div>
-      <span class="brand-sub">Coppell, TX</span>
+      <div class="brand-main"><span class="c4">IRON</span>PATH</div>
+      <span class="brand-sub">GYM PLANNER</span>
     </div>
     <div class="header-title">My Gym Planner</div>
     <div class="header-right">
@@ -586,31 +586,31 @@ function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorag
 function lsj(k,v){try{if(v===undefined){const r=localStorage.getItem(k);return r?JSON.parse(r):null;}localStorage.setItem(k,JSON.stringify(v));}catch{return null;}}
 function lsrm(k){try{localStorage.removeItem(k);}catch{}}
 
-function getChecks(d){const r=lsj(`c4f_checks_${d}`);return r?new Set(r):new Set();}
-function saveChecks(d,s){lsj(`c4f_checks_${d}`,[...s]);}
+function getChecks(d){const r=lsj(`ipf_checks_${d}`);return r?new Set(r):new Set();}
+function saveChecks(d,s){lsj(`ipf_checks_${d}`,[...s]);}
 // Log keyed by exercise NAME (survives goal changes; exercise names don't change)
-function getLog(d,exName){return lsj(`c4f_log_${curWeek()}_${d}_${encName(exName)}`)||[];}
-function saveLog(d,exName,a){lsj(`c4f_log_${curWeek()}_${d}_${encName(exName)}`,a);}
-function getPRs(){return lsj('c4f_prs')||{};}
-function savePRs(p){lsj('c4f_prs',p);}
-function getStreak(){return lsj('c4f_streak')||{count:0,lastWeek:null};}
-function saveStreak(s){lsj('c4f_streak',s);}
-function getNotes(d){return ls(`c4f_notes_${curWeek()}_${d}`)||'';}
-function saveNotes(d,t){ls(`c4f_notes_${curWeek()}_${d}`,t);}
+function getLog(d,exName){return lsj(`ipf_log_${curWeek()}_${d}_${encName(exName)}`)||[];}
+function saveLog(d,exName,a){lsj(`ipf_log_${curWeek()}_${d}_${encName(exName)}`,a);}
+function getPRs(){return lsj('ipf_prs')||{};}
+function savePRs(p){lsj('ipf_prs',p);}
+function getStreak(){return lsj('ipf_streak')||{count:0,lastWeek:null};}
+function saveStreak(s){lsj('ipf_streak',s);}
+function getNotes(d){return ls(`ipf_notes_${curWeek()}_${d}`)||'';}
+function saveNotes(d,t){ls(`ipf_notes_${curWeek()}_${d}`,t);}
 
 function weekReset(){
   const now=curWeek();
-  try{if(localStorage.getItem('c4f_week')!==now){for(let i=0;i<7;i++)lsrm(`c4f_checks_${i}`);ls('c4f_week',now);}}catch{}
+  try{if(localStorage.getItem('ipf_week')!==now){for(let i=0;i<7;i++)lsrm(`ipf_checks_${i}`);ls('ipf_week',now);}}catch{}
 }
 
 function loadState(){
   try{
-    const d=ls('c4f_gymDays');if(d)gymDays=parseInt(d);
-    const a=ls('c4f_activeDay');if(a!==null&&a!=='')activeDay=parseInt(a);
-    const g=ls('c4f_goalType');if(g)goalType=g;
+    const d=ls('ipf_gymDays');if(d)gymDays=parseInt(d);
+    const a=ls('ipf_activeDay');if(a!==null&&a!=='')activeDay=parseInt(a);
+    const g=ls('ipf_goalType');if(g)goalType=g;
   }catch{}
 }
-function persistActiveDay(){ls('c4f_activeDay',activeDay??'');}
+function persistActiveDay(){ls('ipf_activeDay',activeDay??'');}
 
 // ═══════════════════════════════════════════════════════════
 // GOAL MODIFICATION
@@ -664,7 +664,7 @@ function buildOnboarding(){
 }
 
 function pickDays(n){
-  gymDays=n;ls('c4f_gymDays',n);
+  gymDays=n;ls('ipf_gymDays',n);
   // Show goal selection screen
   document.getElementById('ob-days').classList.add('hidden');
   document.getElementById('ob-goal').classList.remove('hidden');
@@ -677,9 +677,9 @@ function goBackToDays(){
 
 function pickGoal(type){
   const prevGoal=goalType;
-  goalType=type; ls('c4f_goalType',type);
+  goalType=type; ls('ipf_goalType',type);
   // If goal changed, clear this week's checks (exercise list may have changed)
-  if(prevGoal!==type){for(let i=0;i<7;i++)lsrm(`c4f_checks_${i}`);}
+  if(prevGoal!==type){for(let i=0;i<7;i++)lsrm(`ipf_checks_${i}`);}
   // Set active day
   const plan=PLANS[gymDays], ti=todayIdx();
   activeDay=(plan.schedule[ti]!==null&&plan.schedule[ti]!==undefined)?ti:plan.schedule.findIndex(x=>x!==null&&x!==undefined);
@@ -926,7 +926,7 @@ function toggle(i){
 
 function resetDay(){
   saveChecks(activeDay,new Set());
-  lsrm(`c4f_session_start_${curWeek()}_${activeDay}`);
+  lsrm(`ipf_session_start_${curWeek()}_${activeDay}`);
   clearRestTimer();clearSessInterval();
   openLogs=new Set();openTips=new Set();openTimerEx=null;
   renderWeek();renderWorkout();
@@ -1001,7 +1001,7 @@ function beep(){
 // ═══════════════════════════════════════════════════════════
 
 function startSessionTimer(wday){
-  const key=`c4f_session_start_${curWeek()}_${wday}`;
+  const key=`ipf_session_start_${curWeek()}_${wday}`;
   if(ls(key))return;ls(key,Date.now());runSessInterval(wday);
 }
 function runSessInterval(wday){
@@ -1012,7 +1012,7 @@ function runSessInterval(wday){
   sessionInterval=setInterval(()=>{const e2=getSessElapsed(wday),el=document.getElementById('sessionClock');if(el&&e2!==null)el.textContent=`⏱ ${fmt(e2)}`;},1000);
 }
 function getSessElapsed(wday){
-  try{const s=parseInt(ls(`c4f_session_start_${curWeek()}_${wday}`));return s?Math.floor((Date.now()-s)/1000):null;}catch{return null;}
+  try{const s=parseInt(ls(`ipf_session_start_${curWeek()}_${wday}`));return s?Math.floor((Date.now()-s)/1000):null;}catch{return null;}
 }
 function clearSessInterval(){if(sessionInterval){clearInterval(sessionInterval);sessionInterval=null;}}
 function stopSessTimer(){clearSessInterval();const cl=document.getElementById('sessionClock');if(cl)cl.classList.remove('running');}
@@ -1101,9 +1101,9 @@ function setTheme(t){
   document.documentElement.setAttribute('data-theme',t==='blue'?'blue':'');
   document.querySelectorAll('.tdot').forEach(d=>d.classList.remove('active'));
   document.querySelector(`.tdot.${t}`).classList.add('active');
-  try{localStorage.setItem('c4f_theme',t);}catch{}
+  try{localStorage.setItem('ipf_theme',t);}catch{}
 }
-function loadTheme(){try{const t=localStorage.getItem('c4f_theme');if(t==='blue')setTheme('blue');}catch{}}
+function loadTheme(){try{const t=localStorage.getItem('ipf_theme');if(t==='blue')setTheme('blue');}catch{}}
 
 // ═══════════════════════════════════════════════════════════
 // INIT
